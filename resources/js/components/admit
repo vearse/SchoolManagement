@@ -1,0 +1,72 @@
+ <div class="row justify-content-center">
+            <div class="col-md-12" v-if="student.admission && student.highlevel">
+                <h4 class="text-center display-1">{{ student.name}}</h4> <br>
+                <p >Fee {{!student.admission.fee}} </p>  
+                 <p>Highlevel {{student.highlevel}}</p>
+
+                <v-card class="elevation-2" v-if="!student.highlevel.file1">
+                    <div class="card-header">
+                        <h4>Upload Your Credensials</h4>
+                    </div>
+                    <div class="card-text-block">
+                       <p> <b class="bold  mr-4"> Department: </b>  {{student.admission.department.name}} </p>
+                       <p> <b class="bold  mr-4"> Description: </b>{{student.admission.department.description}} </p>
+                    </div>
+                    <form @submit.prevent="uploadHighLevel()">
+                        <div class="card-body">
+                            <div class="form-group" >
+                                <label for="exampleInputFile">Document</label>
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input type="file" class="file" @change="prepareFile">
+                                        <!--custom-file-input <label class="custom-file-label" for="exampleInputFile">Choose file</label> -->
+                                    </div>
+                                </div>
+                                <small class="text-danger small">Upload a document(.docx, .pdf)</small>
+                            </div>
+                            <!-- </div> -->
+                        </div>
+                        <div class="modal-footer py-0">
+                            <button type="submit" class="btn btn-success pull-right">Save</button>
+                            <!-- <button type="button" class="btn btn-danger" @click="newDocumentModal">Cancel</button> -->
+                        </div>
+                    </form>
+                </v-card>
+
+                <v-card class="elevation-2" v-else-if="!student.admission.fee">
+                    <div class="card-header">
+                        <h4>Admission Fee</h4>
+                    </div>
+                        <!-- Transaction Date and Time
+                            Transaction Reference Number
+                            Approved Amount
+                            Response Description
+                            Response Code
+                            Transaction amount (what is to be approved. This could be optional)
+                            Customer name and ID (Optional) -->
+                    <div class="card-body">
+                        <div class="card-text-block text-center">
+                            <h5 class="display-1" v-if="acceptatance">#{{acceptatance.pay1}}</h5>
+                        </div>
+                        <form  @submit.prevent="payAcceptanceFee()">
+                            <input name="product_id" type="hidden" value="174"/>
+                            <input name="pay_item_id" type="hidden" value="23"/>
+                            <input name="amount" type="hidden" value="1000000"/>
+                            <input name="currency" type="hidden" value="566"/>
+                            <input name="site_redirect_url" type="hidden" value="http://www.yoursite.com/return" />
+                            <input name="txn_ref" type="hidden" value="7645536"/>
+                            <input name="hash" type="hidden" value="CE69DB9638BB5F26FFF0B80F1F53640E3F52C5129D06CEBF035C0125D1BCE4173AD4D597FEC8179466DA295E67F43DE41F43E4913E9AD6236B449F4ED05CCCE3"/>
+                            <div class="text-center">
+                                <div class="pull-right">
+                                    <input type="submit" value="Confirm" class="btn btn-md btn-success" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </v-card> 
+
+                <v-card class="elevation-2" v-else>
+                    Admission is under review Animation
+                </v-card>
+            </div>
+        </div>
